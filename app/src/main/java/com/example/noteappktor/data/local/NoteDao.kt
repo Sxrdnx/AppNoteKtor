@@ -6,6 +6,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.example.noteappktor.data.local.entities.Note
+import kotlinx.coroutines.flow.Flow
 
 /**
  * Aquellas funciones que no regresen un liveData no se le coloca
@@ -28,8 +29,8 @@ interface NoteDao {
     @Query("SELECT * FROM notes WHERE id = :noteID")
     suspend fun getNoteById(noteID: String): Note?
 
-    /*@Query("SELECT * FROM notes ORDER BY date DESC")
-    fun getAllNotes(): Flow<List<Note>>*/
+    @Query("SELECT * FROM notes ORDER BY date DESC")
+    fun getAllNotes(): Flow<List<Note>>
 
     @Query("SELECT * FROM notes WHERE isSynced = 0")
     suspend fun getAllUnsyncedNotes(): List<Note>
