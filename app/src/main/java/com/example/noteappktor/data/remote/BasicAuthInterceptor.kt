@@ -32,7 +32,6 @@ class BasicAuthInterceptor: Interceptor {
             .header("Authorization",Credentials.basic(email?:"",password?:""))
             .build()
 
-
         return  chain.proceed(authenticatedRequest)
     }
 }
