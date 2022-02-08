@@ -5,8 +5,6 @@ import android.content.SharedPreferences
 import androidx.room.Room
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKey
-import androidx.security.crypto.MasterKeys
-import com.example.noteappktor.data.local.NoteDao
 import com.example.noteappktor.data.local.NotesDatabase
 import com.example.noteappktor.data.remote.BasicAuthInterceptor
 import com.example.noteappktor.data.remote.NoteApi
@@ -80,7 +78,5 @@ object AppModule {
             EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
         )
     }
-
-
 
 }
