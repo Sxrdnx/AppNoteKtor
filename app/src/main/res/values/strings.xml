@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">noteAppktor</string>
+    <string name="login">Login</string>
+    <string name="password">Password</string>
+    <string name="e_mail">E-Mail</string>
+    <string name="login_with_an_existing_account">Login with an existing Account</string>
+
 </resources>

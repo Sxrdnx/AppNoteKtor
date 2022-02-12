@@ -22,7 +22,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
 /**
- * cada modulo que dagger crea necesita ser instalado en un}
+ * cada modulo que dagger crea necesita ser instalado en un
  * componenete especifico, el componente determina que tanta
  * duracion de vida tiene nuestro componente
  * Por ejemplo nuestra base de datos deberia vivir  el siclo
