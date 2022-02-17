@@ -49,15 +49,15 @@ class AuthFragment:BaseFragment(R.layout.fragment_auth) {
         viewModel.registerStatus.observe(viewLifecycleOwner){ result ->
             when(result.status){
                 Status.SUCCESS->{
-                    binding.registerProgressBar.isVisible = false
+                    binding.registerProgressBar.visibility = View.GONE
                     showSnackbar(result.data ?: "Cuenta registrada correctmente")
                 }
                 Status.ERROR->{
-                    binding.registerProgressBar.isVisible = false
+                    binding.registerProgressBar.visibility = View.GONE
                     showSnackbar(result.message ?: "Un error ocurrio")
                 }
                 Status.LOADING->{
-                    binding.registerProgressBar.isVisible = true
+                    binding.registerProgressBar.visibility = View.VISIBLE
                 }
             }
 

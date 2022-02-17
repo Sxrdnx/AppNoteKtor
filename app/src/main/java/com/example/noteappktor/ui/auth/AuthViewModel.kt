@@ -20,6 +20,7 @@ class AuthViewModel @Inject constructor(
 
 
     fun register(email: String, password: String, repeatPassword:String){
+        _registerStatus.postValue(Resource.loading(null))
         if(email.isEmpty() || password.isEmpty() || repeatPassword.isEmpty()){
             _registerStatus.postValue(Resource.error( "Rellene todos los campos",null))
             return
