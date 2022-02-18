@@ -19,4 +19,5 @@ abstract class BaseFragment(layoutId: Int) : Fragment(layoutId) {
         ).show()
     }
 
+
 }

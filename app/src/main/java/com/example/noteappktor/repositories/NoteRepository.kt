@@ -14,13 +14,27 @@ class NoteRepository @Inject constructor(
     private val noteApi: NoteApi,
     private val context:Application
 ) {
+
+    suspend fun login(email: String, password: String)= withContext(Dispatchers.IO){
+        try {
+            val response = noteApi.login(AccountRequest(email,password))
+            if (response.isSuccessful && response.body()!!.successful){
+                Resource.success(response.body()?.message)
+            }else{
+                Resource.error(response.body()?.message ?: response.message(),null)
+            }
+        }catch (e: Exception){
+            Resource.error("No es posible conectar al servidor. Revisa tu coneccion a internet",null)
+        }
+    }
+
     suspend fun register(email: String, password: String)= withContext(Dispatchers.IO){
         try {
             val response = noteApi.register(AccountRequest(email,password))
-            if (response.isSuccessful){
+            if (response.isSuccessful && response.body()!!.successful){
                 Resource.success(response.body()?.message)
             }else{
-                Resource.error(response.message(),null)
+                Resource.error(response.body()?.message ?: response.message(),null)
             }
         }catch (e: Exception){
             Resource.error("No es posible conectar al servidor. Revisa tu coneccion a internet",null)

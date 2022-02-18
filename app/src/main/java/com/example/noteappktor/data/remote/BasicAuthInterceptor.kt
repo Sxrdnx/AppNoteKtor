@@ -20,8 +20,8 @@ class BasicAuthInterceptor: Interceptor {
      * excepto dos
      * esto se hace generando una lista de excepciones
      */
-    val email : String? = null
-    val password: String? = null
+    var email : String? = null
+    var password: String? = null
     override fun intercept(chain: Interceptor.Chain): Response {
         val request = chain.request()
         if (request.url.encodedPath in IGNORE_AUTH_URLS){
