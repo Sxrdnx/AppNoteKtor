@@ -9,6 +9,10 @@ object Constanst {
 
     const val KEY_PASSWORD = "KEY_PASSWORD"
 
+    const val NO_EMAIL = "NO_EMAIL"
+
+    const val NO_PASSWORD ="NO_PASSWORD"
+
     const val ENCRYPTED_SHARED_PREF_NAME = "enc_shared_pref"
 
     val IGNORE_AUTH_URLS = listOf("/login","/register")

@@ -17,6 +17,8 @@ import com.example.noteappktor.data.remote.BasicAuthInterceptor
 import com.example.noteappktor.databinding.FragmentAuthBinding
 import com.example.noteappktor.other.Constanst.KEY_LOGGED_IN_EMAIL
 import com.example.noteappktor.other.Constanst.KEY_PASSWORD
+import com.example.noteappktor.other.Constanst.NO_EMAIL
+import com.example.noteappktor.other.Constanst.NO_PASSWORD
 import com.example.noteappktor.other.Status
 import com.example.noteappktor.ui.BaseFragment
 import dagger.hilt.EntryPoint
@@ -45,13 +47,25 @@ class AuthFragment:BaseFragment(R.layout.fragment_auth) {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        checkStatusLoggin()
         binding = FragmentAuthBinding.inflate(inflater,container,false)
         requireActivity().requestedOrientation = SCREEN_ORIENTATION_PORTRAIT
         suscribeToObservers()
         registerUser()
-
-        logginUser()
+        loggInUser()
         return binding.root
+    }
+
+    private fun checkStatusLoggin(){
+        if (isLoggedIn()){
+            authenticateApi(currentEmail ?: "",curPassword ?: "")
+            redirectLogin()
+        }
+    }
+    private fun isLoggedIn(): Boolean {
+        currentEmail = sharedPref.getString(KEY_LOGGED_IN_EMAIL, NO_EMAIL) ?: NO_EMAIL
+        curPassword = sharedPref.getString(KEY_PASSWORD, NO_PASSWORD) ?: NO_PASSWORD
+        return currentEmail != NO_EMAIL && curPassword != NO_PASSWORD
     }
 
 
@@ -71,7 +85,7 @@ class AuthFragment:BaseFragment(R.layout.fragment_auth) {
         )
     }
 
-    private fun logginUser() {
+    private fun loggInUser() {
         binding.btnLogin.setOnClickListener {
             val email = binding.etLoginEmail.text.toString()
             val password = binding.etLoginPassword.text.toString()

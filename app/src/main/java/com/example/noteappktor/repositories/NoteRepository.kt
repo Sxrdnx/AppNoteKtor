@@ -14,7 +14,6 @@ class NoteRepository @Inject constructor(
     private val noteApi: NoteApi,
     private val context:Application
 ) {
-
     suspend fun login(email: String, password: String)= withContext(Dispatchers.IO){
         try {
             val response = noteApi.login(AccountRequest(email,password))
