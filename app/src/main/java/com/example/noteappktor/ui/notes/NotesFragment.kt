@@ -3,9 +3,12 @@ package com.example.noteappktor.ui.notes
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.*
+import android.widget.LinearLayout
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.noteappktor.R
+import com.example.noteappktor.adapters.NoteAdapter
 import com.example.noteappktor.databinding.FragmentNotesBinding
 import com.example.noteappktor.other.Constanst.KEY_LOGGED_IN_EMAIL
 import com.example.noteappktor.other.Constanst.KEY_PASSWORD
@@ -18,7 +21,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class NotesFragment:BaseFragment(R.layout.fragment_notes) {
     private lateinit var binding : FragmentNotesBinding
-
+    private lateinit var noteAdapter: NoteAdapter
     @Inject
     lateinit var sharedPRef : SharedPreferences
 
@@ -30,6 +33,17 @@ class NotesFragment:BaseFragment(R.layout.fragment_notes) {
         binding = FragmentNotesBinding.inflate(inflater,container,false)
         setHasOptionsMenu(true)
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setUpRecyclerView()
+    }
+
+    private fun setUpRecyclerView() = binding.rvNotes.apply {
+        noteAdapter = NoteAdapter()
+        adapter = noteAdapter
+        layoutManager = LinearLayoutManager(requireContext())
     }
 
     private fun logout() {
