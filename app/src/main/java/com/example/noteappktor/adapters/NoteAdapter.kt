@@ -79,7 +79,7 @@ class NoteAdapter: RecyclerView.Adapter<NoteAdapter.NoteViewHolder>() {
 
     private var onItemClickListener : ((Note)-> Unit) ? = null
 
-    fun setOnitemClickListener(onItemClick: (Note) -> Unit){
+    fun setOnItemClickListener(onItemClick: (Note) -> Unit){
         this.onItemClickListener = onItemClick
     }
 }

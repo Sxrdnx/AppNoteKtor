@@ -19,6 +19,24 @@ class NoteRepository @Inject constructor(
     private val context:Application
 ) {
 
+
+    suspend fun insertNote(note: Note){
+        val response = try {
+            noteApi.addNote(note)
+        }catch (e: Exception){null}
+        if (response != null && response.isSuccessful){
+            noteDao.insertNote(note.apply { isSynced = true  })
+        }else{
+            noteDao.insertNote(note)
+        }
+    }
+
+    suspend fun insertNotes(notes: List<Note>){
+        notes.forEach {
+            insertNote(it)
+        }
+    }
+
     fun getAllNotes(): Flow<Resource<List<Note>>>{
         return networkBoundResource(
             query = {
@@ -29,7 +47,7 @@ class NoteRepository @Inject constructor(
             },
             saveFetchResult = { response ->
                 response.body()?.let{
-                    // TODO: insertar notas en db
+                   insertNotes(it)
                 }
 
             },
@@ -67,6 +85,4 @@ class NoteRepository @Inject constructor(
             Resource.error("No es posible conectar al servidor. Revisa tu coneccion a internet",null)
         }
     }
-
-
 }
