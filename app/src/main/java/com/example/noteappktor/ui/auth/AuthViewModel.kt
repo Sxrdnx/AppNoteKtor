@@ -52,6 +52,9 @@ class AuthViewModel @Inject constructor(
             val result = repository.register(email,password)
             _registerStatus.postValue(result)
         }
+    }
 
+    fun exisde() = viewModelScope.launch {
+        repository.deleteT()
     }
 }

@@ -34,5 +34,8 @@ interface NoteDao {
 
     @Query("SELECT * FROM notes WHERE isSynced = 0")
     suspend fun getAllUnsyncedNotes(): List<Note>
+
+    @Query("DELETE FROM notes")
+    suspend fun droptable()
 }
 

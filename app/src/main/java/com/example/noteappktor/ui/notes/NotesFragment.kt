@@ -51,6 +51,10 @@ class NotesFragment:BaseFragment(R.layout.fragment_notes) {
                 NotesFragmentDirections.actionNotesFragmentToNoteDetailFragment(it.id)
             )
         }
+
+        binding.fabAddNote.setOnClickListener {
+            findNavController().navigate(NotesFragmentDirections.actionNotesFragmentToAddEditNoteFragment(""))
+        }
     }
 
     private fun suscribeToObservers(){

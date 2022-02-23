@@ -3,6 +3,8 @@ package com.example.noteappktor.other
 object Constanst {
     const val DATABASE_NAME = "notes_db"
 
+    const val DEFAULT_NOTE_COLOR = "00FF55"
+
     const val BASE_URL= "http://192.168.100.101:8080"
 
     const val  KEY_LOGGED_IN_EMAIL ="KEY_LOGGED_IN_EMAIL"

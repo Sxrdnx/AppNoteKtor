@@ -6,6 +6,7 @@ import com.example.noteappktor.data.remote.requests.AddOwnerRequest
 import com.example.noteappktor.data.remote.requests.DeleteNoteRequest
 import com.example.noteappktor.data.remote.responses.SimpleResponse
 import okhttp3.RequestBody
+import okhttp3.ResponseBody
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -31,13 +32,13 @@ interface NoteApi {
     @POST("/addNote")
     suspend fun addNote(
         @Body note: Note
-    ): Response<RequestBody>
+    ): Response<ResponseBody>
 
 
     @POST("/deleteNote")
     suspend fun addNote(
         @Body deleteNoteRequest: DeleteNoteRequest
-    ): Response<RequestBody>
+    ): Response<ResponseBody>
 
 
     @POST("/addOwnerToNote")

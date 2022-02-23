@@ -49,6 +49,7 @@ class AuthFragment:BaseFragment(R.layout.fragment_auth) {
     ): View {
         checkStatusLoggin()
         binding = FragmentAuthBinding.inflate(inflater,container,false)
+        //vvviewModel.exisde()
         requireActivity().requestedOrientation = SCREEN_ORIENTATION_PORTRAIT
         suscribeToObservers()
         registerUser()

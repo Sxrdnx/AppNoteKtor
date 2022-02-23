@@ -20,10 +20,15 @@ class NoteRepository @Inject constructor(
 ) {
 
 
+    suspend fun getNoteById(noteID: String) = noteDao.getNoteById(noteID)
+
     suspend fun insertNote(note: Note){
         val response = try {
             noteApi.addNote(note)
-        }catch (e: Exception){null}
+        }catch (e: Exception){
+            println(e.message)
+            null
+        }
         if (response != null && response.isSuccessful){
             noteDao.insertNote(note.apply { isSynced = true  })
         }else{
@@ -31,7 +36,7 @@ class NoteRepository @Inject constructor(
         }
     }
 
-    suspend fun insertNotes(notes: List<Note>){
+    private suspend fun insertNotes(notes: List<Note>){
         notes.forEach {
             insertNote(it)
         }
@@ -85,4 +90,6 @@ class NoteRepository @Inject constructor(
             Resource.error("No es posible conectar al servidor. Revisa tu coneccion a internet",null)
         }
     }
+
+    suspend fun deleteT() = noteDao.droptable()
 }
