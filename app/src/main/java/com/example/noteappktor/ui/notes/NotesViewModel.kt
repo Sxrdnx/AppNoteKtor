@@ -26,7 +26,13 @@ class NotesViewModel @Inject constructor(
 
     fun syncAllNotes() = _forceUpdate.postValue(true)
 
+    fun insertNote(note:Note)=viewModelScope.launch {
+        noteRepository.insertNote(note)
+    }
 
+    fun deleteNote(noteID: String)=viewModelScope.launch{
+        noteRepository.deleteNote(noteID)
+    }
     fun deleteLocallyDeletedNoteID(deletedNoteID: String)= viewModelScope.launch{
         noteRepository.deleteLocallyDeletedNotedID(deletedNoteID)
     }

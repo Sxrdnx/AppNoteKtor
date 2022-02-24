@@ -21,7 +21,6 @@ class NoteRepository @Inject constructor(
     private val context:Application
 ) {
 
-
     suspend fun getNoteById(noteID: String) = noteDao.getNoteById(noteID)
 
     suspend fun insertNote(note: Note){
@@ -79,9 +78,6 @@ class NoteRepository @Inject constructor(
             }
         )
     }
-
-
-
 
     suspend fun login(email: String, password: String)= withContext(Dispatchers.IO){
         try {
