@@ -54,7 +54,5 @@ class AuthViewModel @Inject constructor(
         }
     }
 
-    fun exisde() = viewModelScope.launch {
-        repository.deleteT()
-    }
+
 }

@@ -2,9 +2,11 @@ package com.example.noteappktor.repositories
 
 import android.app.Application
 import com.example.noteappktor.data.local.NoteDao
+import com.example.noteappktor.data.local.entities.LocallyDeletedNoteID
 import com.example.noteappktor.data.local.entities.Note
 import com.example.noteappktor.data.remote.NoteApi
 import com.example.noteappktor.data.remote.requests.AccountRequest
+import com.example.noteappktor.data.remote.requests.DeleteNoteRequest
 import com.example.noteappktor.other.Resource
 import com.example.noteappktor.other.checkForInternetConnection
 import com.example.noteappktor.other.networkBoundResource
@@ -42,6 +44,23 @@ class NoteRepository @Inject constructor(
         }
     }
 
+    suspend fun deleteNote(noteID: String){
+        val response= try{
+            noteApi.deleteNote(DeleteNoteRequest(noteID))
+        }catch (e: Exception){null}
+        noteDao.deleteNoteById(noteID)
+        if (response== null || !response.isSuccessful){
+            noteDao.insertLocallyDeleteNoteID(LocallyDeletedNoteID(noteID))
+        }else{
+            noteDao.deleteLocallyDeletedNoteID(noteID)
+        }
+    }
+
+
+    suspend fun deleteLocallyDeletedNotedID(deletedNoteID: String){
+        noteDao.deleteLocallyDeletedNoteID(deletedNoteID)
+    }
+
     fun getAllNotes(): Flow<Resource<List<Note>>>{
         return networkBoundResource(
             query = {
@@ -54,7 +73,6 @@ class NoteRepository @Inject constructor(
                 response.body()?.let{
                    insertNotes(it)
                 }
-
             },
             shouldFetch = {
                 checkForInternetConnection(context)
@@ -90,6 +108,4 @@ class NoteRepository @Inject constructor(
             Resource.error("No es posible conectar al servidor. Revisa tu coneccion a internet",null)
         }
     }
-
-    suspend fun deleteT() = noteDao.droptable()
 }

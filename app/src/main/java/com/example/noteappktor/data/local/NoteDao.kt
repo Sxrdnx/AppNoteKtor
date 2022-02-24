@@ -5,6 +5,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import com.example.noteappktor.data.local.entities.LocallyDeletedNoteID
 import com.example.noteappktor.data.local.entities.Note
 import kotlinx.coroutines.flow.Flow
 
@@ -35,7 +36,14 @@ interface NoteDao {
     @Query("SELECT * FROM notes WHERE isSynced = 0")
     suspend fun getAllUnsyncedNotes(): List<Note>
 
-    @Query("DELETE FROM notes")
-    suspend fun droptable()
+    @Query("SELECT * FROM locally_deleted_note_ids")
+    suspend fun getAllLocallyDeletedNoteIDs(): List<LocallyDeletedNoteID>
+
+    @Query("DELETE FROM locally_deleted_note_ids WHERE deletedNoteID =:deleteNoteID")
+    suspend fun deleteLocallyDeletedNoteID(deleteNoteID: String)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertLocallyDeleteNoteID(locallyDeletedNoteID: LocallyDeletedNoteID)
+
 }
 

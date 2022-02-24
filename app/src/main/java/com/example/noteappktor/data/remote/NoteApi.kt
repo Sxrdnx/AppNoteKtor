@@ -36,13 +36,13 @@ interface NoteApi {
 
 
     @POST("/deleteNote")
-    suspend fun addNote(
+    suspend fun deleteNote(
         @Body deleteNoteRequest: DeleteNoteRequest
     ): Response<ResponseBody>
 
 
     @POST("/addOwnerToNote")
-    suspend fun addOwnerTOnOTe(
+    suspend fun addOwnerToNote(
         @Body addOwnerRequest: AddOwnerRequest
     ): Response<SimpleResponse>
 
