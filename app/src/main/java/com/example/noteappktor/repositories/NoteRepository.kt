@@ -24,7 +24,9 @@ class NoteRepository @Inject constructor(
 
     private var curNotesResponse: Response<List<Note>> ? = null
 
-    
+
+    fun observerNoteByID(noteID: String)= noteDao.observeNoteById(noteID)
+
     suspend fun syncNotes(){
         val locallyDeletedNoteIDs = noteDao.getAllLocallyDeletedNoteIDs()
         locallyDeletedNoteIDs.forEach { id -> deleteNote(id.deletedNoteID) }
