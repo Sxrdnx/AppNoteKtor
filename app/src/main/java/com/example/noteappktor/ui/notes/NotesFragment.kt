@@ -51,6 +51,7 @@ class NotesFragment:BaseFragment(R.layout.fragment_notes) {
         requireActivity().requestedOrientation = SCREEN_ORIENTATION_USER
         setUpRecyclerView()
         suscribeToObservers()
+        setUpSwipeRefreshLayout()
         itemSelected()
         createNewNote()
     }
@@ -139,7 +140,12 @@ class NotesFragment:BaseFragment(R.layout.fragment_notes) {
                 show()
             }
         }
+    }
 
+    private fun setUpSwipeRefreshLayout(){
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            viewModel.syncAllNotes()
+        }
     }
 
     private fun setUpRecyclerView() = binding.rvNotes.apply {
