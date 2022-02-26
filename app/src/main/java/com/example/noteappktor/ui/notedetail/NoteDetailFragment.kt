@@ -11,8 +11,10 @@ import com.example.noteappktor.R
 import com.example.noteappktor.data.local.entities.Note
 import com.example.noteappktor.databinding.FragmentNoteDetailBinding
 import com.example.noteappktor.ui.BaseFragment
+import com.example.noteappktor.ui.dialogs.AddOwnerDialog
 import dagger.hilt.android.AndroidEntryPoint
 import io.noties.markwon.Markwon
+const val  ADD_OWNER_DIALOG_TAG = "ADD_OWNER_DIALOG_TAG"
 @AndroidEntryPoint
 class NoteDetailFragment:BaseFragment(R.layout.fragment_note_detail) {
     private lateinit var binding: FragmentNoteDetailBinding
@@ -34,7 +36,31 @@ class NoteDetailFragment:BaseFragment(R.layout.fragment_note_detail) {
         binding.fabEditNote.setOnClickListener {
             findNavController().navigate(NoteDetailFragmentDirections.actionNoteDetailFragmentToAddEditNoteFragment(args.id))
         }
+
+        if (savedInstanceState != null ){
+            val addOwnerDialog = parentFragmentManager.findFragmentByTag(ADD_OWNER_DIALOG_TAG) as AddOwnerDialog?
+            addOwnerDialog?.setPositiveListenerListener {
+                addOwnerToCurrentNote(it)
+            }
+        }
     }
+
+    private fun showAddOwnerDialog(){
+        AddOwnerDialog().apply {
+            setPositiveListenerListener {
+                addOwnerToCurrentNote(it)
+            }
+        }.show(parentFragmentManager,ADD_OWNER_DIALOG_TAG)
+
+    }
+
+    private fun addOwnerToCurrentNote(email: String){
+        curNote?.let { note ->
+            viewModel.addOwnerToNote(email,note.id)
+
+        }
+    }
+
 
     private fun setMarkdownText(text: String){
         val markwon = Markwon.create(requireContext())

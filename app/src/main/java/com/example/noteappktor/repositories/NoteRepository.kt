@@ -6,6 +6,7 @@ import com.example.noteappktor.data.local.entities.LocallyDeletedNoteID
 import com.example.noteappktor.data.local.entities.Note
 import com.example.noteappktor.data.remote.NoteApi
 import com.example.noteappktor.data.remote.requests.AccountRequest
+import com.example.noteappktor.data.remote.requests.AddOwnerRequest
 import com.example.noteappktor.data.remote.requests.DeleteNoteRequest
 import com.example.noteappktor.other.Resource
 import com.example.noteappktor.other.checkForInternetConnection
@@ -98,6 +99,19 @@ class NoteRepository @Inject constructor(
                 checkForInternetConnection(context)
             }
         )
+    }
+
+    suspend fun addOwnerToNote(owner: String, noteID: String)= withContext(Dispatchers.IO){
+        try {
+            val response = noteApi.addOwnerToNote(AddOwnerRequest(owner,noteID))
+            if (response.isSuccessful && response.body()!!.successful){
+                Resource.success(response.body()?.message)
+            }else{
+                Resource.error(response.body()?.message ?: response.message(),null)
+            }
+        }catch (e: Exception){
+            Resource.error("No es posible conectar al servidor. Revisa tu coneccion a internet",null)
+        }
     }
 
     suspend fun login(email: String, password: String)= withContext(Dispatchers.IO){
