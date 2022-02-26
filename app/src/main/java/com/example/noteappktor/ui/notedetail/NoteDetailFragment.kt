@@ -1,15 +1,15 @@
 package com.example.noteappktor.ui.notedetail
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.noteappktor.R
 import com.example.noteappktor.data.local.entities.Note
 import com.example.noteappktor.databinding.FragmentNoteDetailBinding
+import com.example.noteappktor.other.Resource
+import com.example.noteappktor.other.Status
 import com.example.noteappktor.ui.BaseFragment
 import com.example.noteappktor.ui.dialogs.AddOwnerDialog
 import dagger.hilt.android.AndroidEntryPoint
@@ -26,6 +26,7 @@ class NoteDetailFragment:BaseFragment(R.layout.fragment_note_detail) {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        setHasOptionsMenu(true)
         binding = FragmentNoteDetailBinding.inflate(inflater,container,false)
         return binding.root
     }
@@ -57,7 +58,6 @@ class NoteDetailFragment:BaseFragment(R.layout.fragment_note_detail) {
     private fun addOwnerToCurrentNote(email: String){
         curNote?.let { note ->
             viewModel.addOwnerToNote(email,note.id)
-
         }
     }
 
@@ -69,6 +69,25 @@ class NoteDetailFragment:BaseFragment(R.layout.fragment_note_detail) {
     }
 
     private fun subcribeToObserver(){
+        viewModel.addOwnerStatus.observe(viewLifecycleOwner){event ->
+            event?.getContentIfNotHandled()?.let {result ->
+                when(result.status){
+                    Status.SUCCESS->{
+                        binding.addOwnerProgressBar.visibility = View.GONE
+                        showSnackbar(result.data?: "usuario agregago correctamente")
+                    }
+                    Status.ERROR->{
+                        binding.addOwnerProgressBar.visibility = View.GONE
+                        showSnackbar(result.message?:"Erro inesperado ocurrio")
+                    }
+                    Status.LOADING->{
+                        binding.addOwnerProgressBar.visibility = View.VISIBLE
+                    }
+                }
+            }
+
+        }
+
         viewModel.observerNoteById(args.id).observe(viewLifecycleOwner){
             it?.let {note ->
                 binding.tvNoteTitle.text = note.title
@@ -76,5 +95,17 @@ class NoteDetailFragment:BaseFragment(R.layout.fragment_note_detail) {
                 curNote = note
             }?: showSnackbar("nota no encontrada")
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.note_detal_menu,menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            R.id.miAddOwner-> showAddOwnerDialog()
+        }
+        return super.onOptionsItemSelected(item)
     }
 }

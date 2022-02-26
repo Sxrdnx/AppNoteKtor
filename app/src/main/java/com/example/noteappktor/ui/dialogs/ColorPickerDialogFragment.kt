@@ -27,7 +27,7 @@ class ColorPickerDialogFragment: DialogFragment(){
                         }
                     }
                 }
-            }).setNegativeButton("Cancelar"){ dialogInterface, i ->
+            }).setNegativeButton("Cancelar"){ dialogInterface, _ ->
                 dialogInterface.cancel()
             }.setBottomSpace(12)
             .attachAlphaSlideBar(true)

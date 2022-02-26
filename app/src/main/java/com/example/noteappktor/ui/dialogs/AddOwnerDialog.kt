@@ -22,16 +22,8 @@ class AddOwnerDialog: DialogFragment(){
         positiveListener = listener
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        binding = EditTextEmailBinding.inflate(inflater,container,false)
-        return binding.root
-    }
-
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        binding = EditTextEmailBinding.inflate(layoutInflater)
         return MaterialAlertDialogBuilder(requireContext())
             .setIcon(R.drawable.ic_add_person)
             .setTitle("Agregar Propietario")
