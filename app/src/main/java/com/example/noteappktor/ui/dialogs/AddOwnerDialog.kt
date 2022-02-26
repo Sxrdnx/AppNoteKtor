@@ -21,7 +21,6 @@ class AddOwnerDialog: DialogFragment(){
     fun setPositiveListenerListener(listener: (String) ->Unit){
         positiveListener = listener
     }
-
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         binding = EditTextEmailBinding.inflate(layoutInflater)
         return MaterialAlertDialogBuilder(requireContext())

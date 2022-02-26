@@ -100,7 +100,7 @@ class NotesFragment:BaseFragment(R.layout.fragment_notes) {
             }
         }
         swipinggItem.observe(viewLifecycleOwner){
-            binding.swipeRefreshLayout.isRefreshing = !it
+            binding.swipeRefreshLayout.isEnabled = !it
         }
     }
 
