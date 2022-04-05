@@ -5,7 +5,7 @@ object Constanst {
 
     const val DEFAULT_NOTE_COLOR = "00FF55"
 
-    const val BASE_URL= "http://192.168.100.101:8080"
+    const val BASE_URL= "http://192.168.0.12:8080"
 
     const val  KEY_LOGGED_IN_EMAIL ="KEY_LOGGED_IN_EMAIL"
 
